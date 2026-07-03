@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#ffffff">
+<title>AI / LLM Daily</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --text: #2a2a2a;
+    --text-sub: #737373;
+    --text-faint: #a0a0a0;
+    --border: #ececec;
+    --border-hover: #d4d4d4;
+    --bg: #ffffff;
+    --bg-alt: #fafafa;
+    --accent: #2cb696;      /* note's signature green */
+    --accent-hover: #249a7f;
+    --radius: 4px;
+    --radius-lg: 8px;
+    --max: 720px;
+    --font-sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    --font-serif: "Noto Serif JP", "Hiragino Mincho ProN", "ヒラギノ明朝 ProN", serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+  a { color: var(--text); text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; padding: 0; color: inherit; }
+
+  /* ============ HEADER ============ */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: saturate(180%) blur(10px);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .site-header-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .site-title {
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .site-title .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .tabs { display: flex; gap: 6px; }
+  .tab {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-sub);
+    padding: 7px 14px;
+    border-radius: 999px;
+    transition: all 0.15s;
+  }
+  .tab:hover { background: var(--bg-alt); color: var(--text); }
+  .tab.is-active {
+    background: var(--text);
+    color: #fff;
+  }
+  .tab .badge {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 16px;
+    text-align: center;
+  }
+
+  /* ============ INTRO ============ */
+  .intro {
+    max-width: var(--max);
+    margin: 36px auto 20px;
+    padding: 0 20px;
+  }
+  .intro h1 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.35;
+    margin: 0 0 8px;
+    letter-spacing: 0.01em;
+  }
+  .intro p {
+    color: var(--text-sub);
+    font-size: 13.5px;
+    margin: 0;
+  }
+
+  /* ============ FEED ============ */
+  .feed {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 8px 20px 80px;
+  }
+  .day-header {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding: 28px 0 12px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+  .card {
+    display: block;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .card:hover { opacity: 0.82; }
+  .card-inner {
+    display: grid;
+    grid-template-columns: 1fr 112px;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .card-body { min-width: 0; }
+  .card-meta {
+    font-size: 12px;
+    color: var(--text-sub);
+    margin-bottom: 7px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-source {
+    font-weight: 500;
+    color: var(--text-sub);
+  }
+  .card-title {
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.45;
+    margin: 0 0 8px;
+    letter-spacing: 0.005em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-summary {
+    font-size: 13.5px;
+    color: var(--text-sub);
+    line-height: 1.65;
+    margin: 0 0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .card-date {
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  .card-thumb {
+    width: 112px;
+    height: 112px;
+    border-radius: var(--radius-lg);
+    background: var(--bg-alt);
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  /* ============ LIKE BUTTON ============ */
+  .like-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-faint);
+    padding: 4px 2px;
+    border-radius: 4px;
+    transition: color 0.15s;
+  }
+  .like-btn:hover { color: var(--text-sub); }
+  .like-btn.is-liked { color: var(--accent); }
+  .like-btn .heart {
+    width: 16px; height: 16px;
+    fill: none; stroke: currentColor;
+    stroke-width: 1.6;
+    transition: all 0.15s;
+  }
+  .like-btn.is-liked .heart { fill: var(--accent); stroke: var(--accent); }
+  .like-btn .count { font-weight: 500; }
+
+  /* ============ EMPTY STATE ============ */
+  .empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-sub);
+  }
+  .empty h2 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0 0 8px;
+    color: var(--text);
+  }
+  .empty p { font-size: 13.5px; margin: 0; }
+
+  /* ============ EXTENSION-FRIENDLY TEXT ============ */
+  /* Ensure selection & injection work for DeepL / Google Translate / Super Simple Highlighter / ABC Words Saver etc. */
+  .detail-title,
+  .detail-summary,
+  .why-text,
+  .card-title,
+  .card-summary,
+  .detail-meta,
+  .topics {
+    -webkit-user-select: text;
+    user-select: text;
+    cursor: text;
+  }
+  .card-title, .card-summary { cursor: pointer; } /* card is still clickable, but text selectable */
+
+  /* ============ ARTICLE DETAIL (page-level, not modal) ============ */
+  .detail {
+    display: none;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+  .detail.is-open { display: block; }
+  .detail-back {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0 8px;
+    margin-bottom: 8px;
+  }
+  .detail-back button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    color: var(--text-sub);
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin-left: -10px;
+  }
+  .detail-back button:hover { background: var(--bg-alt); color: var(--text); }
+  .detail-body {
+    padding: 32px 24px 60px;
+  }
+  .detail-meta {
+    font-size: 12.5px;
+    color: var(--text-sub);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .detail-title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.4;
+    margin: 0 0 18px;
+    letter-spacing: 0.008em;
+  }
+  .detail-thumb {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    margin: 0 0 24px;
+    background: var(--bg-alt);
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+  }
+  .detail-summary {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--text);
+    margin: 0 0 28px;
+  }
+  .why {
+    background: var(--bg-alt);
+    border-left: 3px solid var(--accent);
+    padding: 14px 18px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 0 0 32px;
+  }
+  .why-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 5px;
+  }
+  .why-text {
+    font-size: 14px;
+    color: var(--text);
+    margin: 0;
+    line-height: 1.65;
+  }
+  .topics {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 0 0 28px;
+  }
+  .topic {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--text-sub);
+    background: var(--bg-alt);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .detail-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--border-hover);
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .btn:hover { background: var(--bg-alt); }
+  .btn-primary {
+    background: var(--text);
+    color: #fff;
+    border-color: var(--text);
+  }
+  .btn-primary:hover { background: #000; border-color: #000; }
+  .btn-like.is-liked {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(44,182,150,0.06);
+  }
+
+  /* ============ CATEGORY CHIPS ============ */
+  .chip-row-wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .chip-row-wrap::-webkit-scrollbar { display: none; }
+  .chip-row {
+    display: flex;
+    gap: 8px;
+    padding: 4px 0 16px;
+    white-space: nowrap;
+  }
+  .chip {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text-sub);
+    background: var(--bg-alt);
+    padding: 7px 14px;
+    border-radius: 999px;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .chip:hover { background: #f0f0f0; color: var(--text); }
+  .chip.is-active {
+    background: var(--text);
+    color: #fff;
+  }
+  .chip .chip-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .chip .chip-count {
+    font-size: 11.5px;
+    opacity: 0.7;
+    font-weight: 500;
+  }
+
+  /* ============ CARD CATEGORY LABEL ============ */
+  .card-cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-sub);
+  }
+  .card-cat .cat-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+
+  /* ============ BOTTOM SHEET ============ */
+  .sheet {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+  }
+  .sheet.is-open { display: block; }
+  .sheet-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.38);
+    animation: sheet-fade 0.2s ease;
+  }
+  .sheet-panel {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    background: var(--bg);
+    border-radius: 16px 16px 0 0;
+    padding: 10px 18px 24px;
+    max-width: var(--max);
+    margin: 0 auto;
+    animation: sheet-slide 0.24s cubic-bezier(.22,1,.36,1);
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  @keyframes sheet-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes sheet-slide { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .sheet-handle {
+    width: 36px; height: 4px;
+    background: #d9d9d9;
+    border-radius: 999px;
+    margin: 0 auto 12px;
+  }
+  .sheet-title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 17px;
+    margin: 6px 4px 16px;
+    color: var(--text);
+  }
+  .sheet-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .sheet-opt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 14px;
+    background: var(--bg-alt);
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    transition: all 0.15s;
+    border: 1.5px solid transparent;
+    text-align: left;
+    width: 100%;
+  }
+  .sheet-opt:hover { background: #f2f2f2; }
+  .sheet-opt.is-current {
+    background: rgba(44,182,150,0.08);
+    border-color: var(--accent);
+  }
+  .sheet-opt .opt-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .sheet-opt .opt-check {
+    margin-left: auto;
+    color: var(--accent);
+    font-size: 16px;
+    display: none;
+  }
+  .sheet-opt.is-current .opt-check { display: inline; }
+  .sheet-action {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 6px;
+    transition: background 0.15s;
+  }
+  .sheet-remove {
+    color: #d14a4a;
+    background: rgba(209,74,74,0.06);
+  }
+  .sheet-remove:hover { background: rgba(209,74,74,0.12); }
+  .sheet-cancel {
+    color: var(--text-sub);
+    background: transparent;
+  }
+  .sheet-cancel:hover { background: var(--bg-alt); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 560px) {
+    .intro { margin-top: 24px; }
+    .intro h1 { font-size: 22px; }
+    .card-inner {
+      grid-template-columns: 1fr 84px;
+      gap: 14px;
+    }
+    .card-thumb { width: 84px; height: 84px; }
+    .card-title { font-size: 15.5px; }
+    .detail-body { padding: 24px 18px 48px; }
+    .detail-title { font-size: 22px; }
+    .sheet-options { grid-template-columns: 1fr; }
+  }
+
+  /* Sign-in UI (top-right of header) */
+  .auth { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .auth-btn { background: #fff; border: 1px solid #d6d6d6; border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: 12.5px; color: #333; font-weight: 500; line-height: 1.4; }
+  .auth-btn:hover { background: #f5f5f5; border-color: #bdbdbd; }
+  .auth-btn:active { background: #ececec; }
+  .auth-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+  .auth-name { color: #555; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  @media (max-width: 540px) { .auth-name { display: none; } }
+</style>
+
+<!-- Firebase SDK (compat build, loaded via CDN — no bundler needed). Shared
+     with the highlighter-3767e Firebase project; the ai-llm-daily app
+     is isolated by Firestore collection name (`ai_saved/{uid}`) +
+     security rule, so it cannot read or write to other apps' collections. -->
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+<script>
+  firebase.initializeApp({
+    apiKey: "AIzaSyDG-0E-dqSNnpOZTnvOO7m8EJ6Yk_JDKjg",
+    authDomain: "highlighter-3767e.firebaseapp.com",
+    projectId: "highlighter-3767e",
+    storageBucket: "highlighter-3767e.firebasestorage.app",
+    messagingSenderId: "816288975011",
+    appId: "1:816288975011:web:42eba1ed3e2e898db05716",
+  });
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="site-title"><span class="dot"></span>AI / LLM Daily</div>
+    <nav class="tabs">
+      <button class="tab is-active" data-tab="all">All</button>
+      <button class="tab" data-tab="saved">Saved<span class="badge" id="saved-badge"></span></button>
+    </nav>
+    <div class="auth" id="auth-ui"><!-- populated by renderAuthUI() once Firebase auth state resolves --></div>
+  </div>
+</header>
+
+<section class="intro" id="intro">
+  <h1>Today in city-making.</h1>
+  <p id="intro-subtitle">English-language AI &amp; LLM engineering news, filed daily at 9am.</p>
+</section>
+
+<div class="chip-row-wrap" id="chip-row-wrap" style="display:none;">
+  <div class="chip-row" id="chip-row"></div>
+</div>
+
+<main class="feed" id="feed"></main>
+
+<div class="sheet" id="sheet" aria-hidden="true">
+  <div class="sheet-backdrop" data-sheet-close></div>
+  <div class="sheet-panel">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title" id="sheet-title">Save to...</div>
+    <div class="sheet-options" id="sheet-options"></div>
+    <button class="sheet-action sheet-remove" id="sheet-remove" style="display:none;">Remove from saved</button>
+    <button class="sheet-action sheet-cancel" data-sheet-close>Cancel</button>
+  </div>
+</div>
+
+<script id="initial-data" type="application/json">
+{
+  "articles": []
+}
+</script>
+
+<article class="detail" id="detail" aria-hidden="true">
+  <div class="detail-back">
+    <button id="detail-close-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      Back
+    </button>
+    <button class="like-btn" id="detail-like-top">
+      <svg class="heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      <span class="count"></span>
+    </button>
+  </div>
+  <div class="detail-body" id="detail-body"></div>
+</article>
+
+<script>
+(function(){
+  'use strict';
+
+  // ========== CONSTANTS ==========
+  const STORAGE_KEY = 'udd_saved_v2';      // { [articleId]: categoryId }
+  const OLD_KEY     = 'udd_liked_v1';      // legacy: [articleId, ...]
+
+  // Cloud sync moved from JSONBin (single shared bin = no per-user privacy)
+  // to Firebase Firestore (per-user document keyed by auth uid). See
+  // signIn() / signOut() / startCloudSync() below. Anonymous visitors keep
+  // a local-only save list; signing in syncs across the user's devices.
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const googleProvider = new firebase.auth.GoogleAuthProvider();
+  // Firestore collection name is namespaced so the ai-llm-daily app
+  // shares the Firebase project with Highlighter without colliding on data
+  // or auth scopes.
+  const FS_COLLECTION = 'ai_saved';
+
+  const CATEGORIES = [
+    { id: 'melbourne', label: 'Melbourne', color: '#e85d75' },
+    { id: 'australia', label: 'Australia', color: '#ffa41b' },
+    { id: 'japan',     label: 'Japan',     color: '#d14a4a' },
+    { id: 'europe',    label: 'Europe',    color: '#4a7bd8' },
+    { id: 'asia',      label: 'Asia',      color: '#7b4ad8' },
+    { id: 'other',     label: 'Other',     color: '#8a8a8a' },
+  ];
+  const CAT_BY_ID = Object.fromEntries(CATEGORIES.map(c => [c.id, c]));
+
+  // ========== STATE ==========
+  const state = {
+    articles: [],
+    saved: {},             // { articleId: categoryId } — local cache (instant UI)
+    tab: 'all',            // 'all' | 'saved'
+    savedFilter: 'all',    // 'all' | categoryId
+    openId: null,          // article id open in detail modal
+    sheetId: null,         // article id whose save-sheet is open
+    user: null,            // Firebase user object (null = anonymous, save = local-only)
+  };
+  let _unsubSaved = null;  // unsubscribe handle for the Firestore onSnapshot
+  let _pushTimer = null;   // debounce timer for pushing local changes up
+
+  // ========== STORAGE ==========
+  function loadSaved() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) { state.saved = JSON.parse(raw); return; }
+    } catch(e) {}
+    // migrate from legacy
+    try {
+      const oldRaw = localStorage.getItem(OLD_KEY);
+      if (oldRaw) {
+        const arr = JSON.parse(oldRaw);
+        const mig = {};
+        (arr || []).forEach(id => { mig[id] = 'other'; });
+        state.saved = mig;
+        persistSaved();
+      }
+    } catch(e) {}
+  }
+  function persistSaved() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.saved)); } catch(e) {}
+  }
+  function isSaved(id) { return !!state.saved[id]; }
+  function getCat(id) { return state.saved[id] || null; }
+  function setCat(id, cat) { state.saved[id] = cat; persistSaved(); schedulePush(); }
+  function removeSave(id) { delete state.saved[id]; persistSaved(); schedulePush(); }
+
+  // ========== CLOUD SYNC (Firebase Firestore, per-user) ==========
+  // Anonymous users keep a local-only saved list (in `state.saved` + localStorage).
+  // Signed-in users get cross-device sync via Firestore at ai_saved/{uid}.
+  // - On sign-in: read remote doc, merge with local (union; remote keys win
+  //   on conflict so the most recent cross-device write is preferred), push
+  //   the union back so all devices converge.
+  // - While signed in: every save/unsave fires a debounced push, and a
+  //   real-time onSnapshot listener applies remote changes from other devices.
+  // - On sign-out: stop syncing; localStorage retains whatever was last set.
+
+  function isSignedIn() { return !!state.user; }
+
+  function schedulePush() {
+    clearTimeout(_pushTimer);
+    _pushTimer = setTimeout(pushRemote, 700);
+  }
+
+  async function pushRemote() {
+    if (!isSignedIn()) return;
+    try {
+      await db.collection(FS_COLLECTION).doc(state.user.uid).set({
+        saved: state.saved,
+        updated_at: firebase.firestore.FieldValue.serverTimestamp(),
+      }, { merge: true });
+    } catch(e) { /* offline or rules denied — local cache still good */ }
+  }
+
+  async function startCloudSync(user) {
+    // Called when the user signs in. STRICTLY REPLACE local state with this
+    // account's Firestore doc — no merge from anonymous localStorage. This
+    // enforces per-account isolation: signing in shows ONLY what that
+    // account has saved, never bleeds anonymous browser state into the
+    // account, and switching accounts on the same browser shows the right
+    // per-account list.
+    //
+    // The previous implementation merged local ∪ remote and pushed the
+    // union back up, which silently dumped the anonymous browser's saves
+    // into whichever account the user happened to sign in with.
+    const ref = db.collection(FS_COLLECTION).doc(user.uid);
+    let remoteSaved = {};
+    try {
+      const snap = await ref.get();
+      if (snap.exists && snap.data() && snap.data().saved) {
+        remoteSaved = snap.data().saved;
+      }
+    } catch(e) { /* network — fall back to empty until reconnect */ }
+
+    state.saved = remoteSaved;
+    persistSaved();
+    renderFeed();
+    renderSavedBadge();
+
+    // Real-time updates from other devices on the same account.
+    if (_unsubSaved) _unsubSaved();
+    _unsubSaved = ref.onSnapshot((snap) => {
+      if (!snap.exists) return;
+      const data = snap.data();
+      if (!data || !data.saved) return;
+      const incoming = data.saved;
+      const same =
+        Object.keys(incoming).length === Object.keys(state.saved).length &&
+        Object.keys(incoming).every(k => state.saved[k] === incoming[k]);
+      if (same) return;
+      state.saved = incoming;
+      persistSaved();
+      renderFeed();
+      renderSavedBadge();
+    });
+  }
+
+  function stopCloudSync() {
+    if (_unsubSaved) { _unsubSaved(); _unsubSaved = null; }
+  }
+
+  // ========== AUTH ==========
+  async function signIn() {
+    try {
+      await auth.signInWithPopup(googleProvider);
+    } catch(e) {
+      // Common: user closed popup. No-op.
+      if (e && e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') {
+        console.warn('signIn failed:', e.code || e.message);
+        alert('Sign-in failed: ' + (e.message || e));
+      }
+    }
+  }
+
+  async function signOutNow() {
+    stopCloudSync();
+    try { await auth.signOut(); } catch(e) {}
+    // CLEAR local saves on sign-out so the browser doesn't leak this
+    // account's saved list to anonymous viewers or to the next account that
+    // signs in on the same browser. Per-account isolation requires that
+    // anonymous = empty.
+    state.saved = {};
+    try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+    try { localStorage.removeItem(OLD_KEY); } catch(e) {}
+    renderFeed();
+    renderSavedBadge();
+  }
+
+  function renderAuthUI() {
+    const el = document.getElementById('auth-ui');
+    if (!el) return;
+    if (state.user) {
+      const u = state.user;
+      const avatar = u.photoURL
+        ? `<img class="auth-avatar" src="${escapeHtml(u.photoURL)}" alt="" referrerpolicy="no-referrer">`
+        : '';
+      const name = escapeHtml(u.displayName || u.email || 'signed in');
+      el.innerHTML = `${avatar}<span class="auth-name">${name}</span><button class="auth-btn" id="auth-out">Sign out</button>`;
+      const btn = document.getElementById('auth-out');
+      if (btn) btn.onclick = signOutNow;
+    } else {
+      el.innerHTML = `<button class="auth-btn" id="auth-in">Sign in</button>`;
+      const btn = document.getElementById('auth-in');
+      if (btn) btn.onclick = signIn;
+    }
+  }
+
+  auth.onAuthStateChanged((user) => {
+    state.user = user || null;
+    renderAuthUI();
+    if (user) {
+      startCloudSync(user);
+    } else {
+      stopCloudSync();
+    }
+  });
+
+  // ========== UTIL ==========
+  function escapeHtml(s) {
+    return String(s || '').replace(/[&<>"']/g, ch => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[ch]));
+  }
+  function fmtDate(iso) {
+    try {
+      const d = new Date(iso + 'T00:00:00');
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    } catch(e) { return iso; }
+  }
+  function fmtDayHeader(iso) {
+    try {
+      const d = new Date(iso + 'T00:00:00');
+      return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+    } catch(e) { return iso; }
+  }
+  function groupByDate(arr) {
+    const map = new Map();
+    arr.forEach(a => {
+      if (!map.has(a.date)) map.set(a.date, []);
+      map.get(a.date).push(a);
+    });
+    return [...map.entries()].sort((a,b) => b[0].localeCompare(a[0]));
+  }
+  function countByCategory() {
+    const counts = Object.fromEntries(CATEGORIES.map(c => [c.id, 0]));
+    Object.values(state.saved).forEach(cat => {
+      if (counts[cat] != null) counts[cat]++;
+    });
+    return counts;
+  }
+
+  // ========== RENDER ==========
+  function heartSvg() {
+    return '<svg class="heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>';
+  }
+  function cardHtml(a) {
+    const saved = isSaved(a.id);
+    const cat = saved ? CAT_BY_ID[getCat(a.id)] : null;
+    const thumb = a.thumbnail
+      ? `<img class="card-thumb" src="${escapeHtml(a.thumbnail)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`
+      : `<div class="card-thumb"></div>`;
+    const catLabel = cat
+      ? `<span class="card-cat"><span class="cat-dot" style="background:${cat.color}"></span>${escapeHtml(cat.label)}</span>`
+      : '';
+    return `
+      <article class="card" data-id="${escapeHtml(a.id)}">
+        <div class="card-inner">
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-source">${escapeHtml(a.source)}</span>
+              ${catLabel ? `<span>·</span>${catLabel}` : ''}
+            </div>
+            <h2 class="card-title">${escapeHtml(a.title)}</h2>
+            <p class="card-summary">${escapeHtml(a.summary)}</p>
+            <div class="card-footer">
+              <span class="card-date">${fmtDate(a.date)}</span>
+              <button class="like-btn ${saved?'is-liked':''}" data-like="${escapeHtml(a.id)}" aria-label="Save">
+                ${heartSvg()}
+              </button>
+            </div>
+          </div>
+          ${thumb}
+        </div>
+      </article>
+    `;
+  }
+  function renderChips() {
+    const wrap = document.getElementById('chip-row-wrap');
+    const row = document.getElementById('chip-row');
+    if (state.tab !== 'saved') {
+      wrap.style.display = 'none';
+      return;
+    }
+    wrap.style.display = 'block';
+    const counts = countByCategory();
+    const total = Object.values(counts).reduce((a,b) => a+b, 0);
+    const chips = [
+      `<button class="chip ${state.savedFilter==='all'?'is-active':''}" data-chip="all">All <span class="chip-count">${total}</span></button>`,
+      ...CATEGORIES.map(c => {
+        const n = counts[c.id] || 0;
+        return `<button class="chip ${state.savedFilter===c.id?'is-active':''}" data-chip="${c.id}">
+          <span class="chip-dot" style="background:${c.color}"></span>${escapeHtml(c.label)}
+          <span class="chip-count">${n}</span>
+        </button>`;
+      })
+    ];
+    row.innerHTML = chips.join('');
+  }
+  function renderFeed() {
+    const feed = document.getElementById('feed');
+    let list = state.articles.slice();
+    if (state.tab === 'saved') {
+      list = list.filter(a => isSaved(a.id));
+      if (state.savedFilter !== 'all') {
+        list = list.filter(a => getCat(a.id) === state.savedFilter);
+      }
+    }
+    list.sort((a,b) => b.date.localeCompare(a.date));
+
+    renderChips();
+
+    if (list.length === 0) {
+      let msg = 'Tomorrow morning\u2019s digest will appear here.';
+      let heading = 'No articles yet';
+      if (state.tab === 'saved') {
+        if (state.savedFilter === 'all') {
+          heading = 'No saved articles yet';
+          msg = 'Tap the heart on a card and choose a category to save it here.';
+        } else {
+          const c = CAT_BY_ID[state.savedFilter];
+          heading = `No saved ${c ? c.label : ''} articles yet`;
+          msg = 'Save an article to this category from its heart button.';
+        }
+      }
+      feed.innerHTML = `
+        <div class="empty">
+          <h2>${escapeHtml(heading)}</h2>
+          <p>${escapeHtml(msg)}</p>
+        </div>`;
+      return;
+    }
+
+    const grouped = groupByDate(list);
+    feed.innerHTML = grouped.map(([date, items]) => `
+      <div class="day-header">${fmtDayHeader(date)}</div>
+      ${items.map(cardHtml).join('')}
+    `).join('');
+  }
+  function renderSavedBadge() {
+    const b = document.getElementById('saved-badge');
+    const n = Object.keys(state.saved).length;
+    b.textContent = n > 0 ? n : '';
+  }
+
+  // ========== DETAIL ==========
+  function openDetail(id, opts) {
+    opts = opts || {};
+    const a = state.articles.find(x => x.id === id);
+    if (!a) return;
+    state.openId = id;
+    // Update URL so per-article highlighter/word-saver extensions can scope by URL
+    if (!opts.fromHash) {
+      try { history.pushState({ articleId: id }, '', '#/a/' + encodeURIComponent(id)); } catch(e) {}
+    }
+    const saved = isSaved(id);
+    const cat = saved ? CAT_BY_ID[getCat(id)] : null;
+    const body = document.getElementById('detail-body');
+    const topics = (a.topics || []).map(t => `<span class="topic">${escapeHtml(t)}</span>`).join('');
+    const thumb = a.thumbnail
+      ? `<img class="detail-thumb" src="${escapeHtml(a.thumbnail)}" alt="">`
+      : '';
+    const saveLabel = saved ? `Saved · ${cat ? cat.label : ''}` : 'Save';
+    body.innerHTML = `
+      <div class="detail-meta">
+        <span class="card-source">${escapeHtml(a.source)}</span>
+        <span>·</span>
+        <span>${fmtDate(a.date)}</span>
+        ${cat ? `<span>·</span><span class="card-cat"><span class="cat-dot" style="background:${cat.color}"></span>${escapeHtml(cat.label)}</span>` : ''}
+      </div>
+      <h1 class="detail-title">${escapeHtml(a.title)}</h1>
+      ${thumb}
+      <p class="detail-summary">${escapeHtml(a.summary)}</p>
+      ${a.whyItMatters ? `
+        <div class="why">
+          <div class="why-label">Why it matters</div>
+          <p class="why-text">${escapeHtml(a.whyItMatters)}</p>
+        </div>` : ''}
+      ${topics ? `<div class="topics">${topics}</div>` : ''}
+      <div class="detail-actions">
+        <a class="btn btn-primary" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">
+          Read original
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg>
+        </a>
+        <button class="btn btn-like ${saved?'is-liked':''}" id="detail-like-btn">
+          ${heartSvg()}
+          <span>${saveLabel}</span>
+        </button>
+      </div>
+    `;
+    document.getElementById('detail-like-top').classList.toggle('is-liked', saved);
+    document.getElementById('detail').classList.add('is-open');
+    // Hide list-view UI so the article reads as the page's main content
+    document.getElementById('intro').style.display = 'none';
+    document.getElementById('chip-row-wrap').style.display = 'none';
+    document.getElementById('feed').style.display = 'none';
+    window.scrollTo(0, 0);
+  }
+  function closeDetail(opts) {
+    opts = opts || {};
+    state.openId = null;
+    document.getElementById('detail').classList.remove('is-open');
+    document.getElementById('intro').style.display = '';
+    document.getElementById('feed').style.display = '';
+    // Clear hash so URL is back to index
+    if (!opts.fromPop) {
+      try {
+        if (location.hash && location.hash.indexOf('#/a/') === 0) {
+          history.pushState(null, '', location.pathname + location.search);
+        }
+      } catch(e) {}
+    }
+    renderFeed(); // also re-shows chip row if needed
+  }
+
+  function parseHashArticleId() {
+    const h = location.hash || '';
+    const m = h.match(/^#\/a\/(.+)$/);
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+  function handleHashChange() {
+    const id = parseHashArticleId();
+    if (id && state.articles.find(a => a.id === id)) {
+      if (state.openId !== id) openDetail(id, { fromHash: true });
+    } else {
+      if (state.openId) closeDetail({ fromPop: true });
+    }
+  }
+
+  // ========== BOTTOM SHEET ==========
+  function openSheet(articleId) {
+    state.sheetId = articleId;
+    const saved = isSaved(articleId);
+    const currentCat = saved ? getCat(articleId) : null;
+    document.getElementById('sheet-title').textContent = saved ? 'Move to…' : 'Save to…';
+    const opts = CATEGORIES.map(c => `
+      <button class="sheet-opt ${c.id===currentCat?'is-current':''}" data-cat="${c.id}">
+        <span class="opt-dot" style="background:${c.color}"></span>
+        <span>${escapeHtml(c.label)}</span>
+        <span class="opt-check">\u2713</span>
+      </button>
+    `).join('');
+    document.getElementById('sheet-options').innerHTML = opts;
+    document.getElementById('sheet-remove').style.display = saved ? 'block' : 'none';
+    document.getElementById('sheet').classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSheet() {
+    state.sheetId = null;
+    document.getElementById('sheet').classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+  function chooseCategory(cat) {
+    if (!state.sheetId) return;
+    setCat(state.sheetId, cat);
+    const wasInDetail = state.openId === state.sheetId;
+    closeSheet();
+    renderFeed();
+    renderSavedBadge();
+    if (wasInDetail) openDetail(state.openId);
+  }
+  function removeFromSheet() {
+    if (!state.sheetId) return;
+    const wasInDetail = state.openId === state.sheetId;
+    removeSave(state.sheetId);
+    closeSheet();
+    renderFeed();
+    renderSavedBadge();
+    if (wasInDetail) openDetail(state.openId);
+  }
+
+  // ========== EVENTS ==========
+  function bind() {
+    // Top tabs
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        state.tab = btn.dataset.tab;
+        if (state.tab !== 'saved') state.savedFilter = 'all';
+        renderFeed();
+      });
+    });
+
+    // Feed clicks (cards + like buttons)
+    document.getElementById('feed').addEventListener('click', (e) => {
+      const likeBtn = e.target.closest('[data-like]');
+      if (likeBtn) {
+        e.stopPropagation();
+        openSheet(likeBtn.dataset.like);
+        return;
+      }
+      const card = e.target.closest('.card');
+      if (card) openDetail(card.dataset.id);
+    });
+
+    // Chip row clicks
+    document.getElementById('chip-row').addEventListener('click', (e) => {
+      const chip = e.target.closest('[data-chip]');
+      if (!chip) return;
+      state.savedFilter = chip.dataset.chip;
+      renderFeed();
+    });
+
+    // Detail modal
+    document.getElementById('detail-close-btn').addEventListener('click', closeDetail);
+    document.getElementById('detail').addEventListener('click', (e) => {
+      if (e.target.id === 'detail') closeDetail();
+    });
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('#detail-like-btn') && state.openId) {
+        openSheet(state.openId);
+      }
+      if (e.target.closest('#detail-like-top') && state.openId) {
+        openSheet(state.openId);
+      }
+    });
+
+    // Sheet clicks
+    document.getElementById('sheet').addEventListener('click', (e) => {
+      if (e.target.closest('[data-sheet-close]')) { closeSheet(); return; }
+      const opt = e.target.closest('[data-cat]');
+      if (opt) { chooseCategory(opt.dataset.cat); return; }
+    });
+    document.getElementById('sheet-remove').addEventListener('click', removeFromSheet);
+
+    // Keyboard
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (state.sheetId) closeSheet();
+        else if (state.openId) closeDetail();
+      }
+    });
+
+    // Back/forward button & external hash navigation
+    window.addEventListener('popstate', handleHashChange);
+    window.addEventListener('hashchange', handleHashChange);
+  }
+
+  // ========== INIT ==========
+  async function init() {
+    loadSaved();
+    renderAuthUI();  // initial paint before auth state resolves (shows "Sign in")
+    bind();
+    let data = null;
+    try {
+      const res = await fetch('data.json?v=' + Date.now());
+      if (res.ok) data = await res.json();
+    } catch(e) { /* file:// or offline — fall back to inline */ }
+    if (!data || !Array.isArray(data.articles) || data.articles.length === 0) {
+      try {
+        const inline = document.getElementById('initial-data');
+        if (inline) data = JSON.parse(inline.textContent);
+      } catch(e) {}
+    }
+    state.articles = (data && data.articles) || [];
+    renderFeed();
+    renderSavedBadge();
+    // If URL arrives with #/a/{id}, auto-open that article (bookmark support)
+    const hashId = parseHashArticleId();
+    if (hashId && state.articles.find(a => a.id === hashId)) {
+      openDetail(hashId, { fromHash: true });
+    }
+    // Cloud sync is owned by onAuthStateChanged (above) — it fires on initial
+    // load with either a cached user (auto-resync) or null (anonymous mode).
+  }
+  init();
+})();
+</script>
+
+</body>
+</html>
