@@ -1,0 +1,37 @@
+# AI / LLM Daily — 2026-07-03
+
+## Anthropic says it cut 80 percent of Claude Code's system prompt because Fable 5 models "want a smaller system prompt"
+
+**Source:** The Decoder  
+**URL:** https://the-decoder.com/anthropic-says-it-cut-80-percent-of-claude-codes-system-prompt-because-fable-5-models-want-a-smaller-system-prompt/  
+**Topics:** Claude / Anthropic, AI Coding, Hands-on
+
+Anthropic has reduced the system prompt for Claude Code by roughly 80 percent, a change tied directly to the behavioral characteristics of its new Fable 5 models. Tariq Shihipar, a member of technical staff at Anthropic, described the shift as a fundamental rethinking of how the company steers model behavior. According to Shihipar, the new Mythos-class models no longer benefit from extensive instructions and worked examples the way earlier generations did. Providing more examples, he explained, actually tends to constrain the models because they are "more imaginative than the examples we give it." Rather than relying on explicit prohibitions like "do not do this," Anthropic now guides Fable models primarily through context. Shihipar outlined a three-phase evolution in prompt engineering at Anthropic. Early models required short prompts packed with examples and restrictive guardrails. As models improved at following nuanced instructions, prompts grew longer and more detailed. Now, with the Fable 5 generation, the trend has reversed and the most effective approach involves substantially shorter prompts that give the model more room to reason independently. The change has immediate practical implications for anyone crafting system prompts for Claude. Where developers previously relied on exhaustive rule lists and detailed examples to shape output, over-specifying behavior with Fable 5 may actually degrade quality. The shift suggests that prompt engineering for frontier models is moving away from explicit instruction toward providing relevant context and letting the model apply its own judgment. Anthropic has not published specific before-and-after prompt comparisons, but the 80 percent reduction signals a dramatic change in how system prompts should be structured for the latest generation of Claude models.
+
+**Why it matters:** Frontier models performing better with less instruction upends the conventional wisdom that longer, more detailed system prompts produce better results. Anyone building on Claude should audit their existing system prompts and test whether trimming rules and examples in favor of contextual guidance improves output quality with Fable 5.
+
+---
+
+## llm-coding-agent 0.1a0
+
+**Source:** Simon Willison  
+**URL:** https://simonwillison.net/2026/Jul/2/llm-coding-agent/#atom-everything  
+**Topics:** AI Coding, Agents, Open Models, Hands-on
+
+Simon Willison has released llm-coding-agent 0.1a0, an early alpha of a Claude Code-style coding agent built entirely on top of his open-source LLM Python library. The project emerged from the LLM library's recent evolution into a more general agent framework, and Willison used Fable 5 running through Claude Code for web to generate the entire implementation from a spec through test-driven development. The agent ships with six tools that mirror the core capabilities of commercial coding assistants: edit_file for precise string replacements in source files, execute_command for running shell commands with configurable timeouts, list_files for glob-based file discovery that respects gitignore patterns, read_file with pagination support for large files, search_files for regex-based content search, and write_file for creating new files. Users can install and run the agent immediately via uvx with the command "uvx --prerelease=allow --with llm-coding-agent llm code." The agent supports multiple operational modes including a yolo flag that auto-approves all tool calls and an allow flag for granular command whitelisting such as allowing only pytest and git diff. It also exposes a Python API through a CodingAgent class that accepts a model parameter, working directory, and approval settings, making it embeddable in larger automation workflows. Willison tested the agent with GPT-5.5 and demonstrated it building a SwiftUI CLI application that renders the current time in ASCII art. Because the agent runs on the LLM library, it works with any model provider that library supports, giving developers the flexibility to swap between commercial and open-weight models without changing their tooling. The full implementation, spec, and commit history are available on GitHub.
+
+**Why it matters:** A fully open-source coding agent that runs on any LLM provider gives solo developers a composable alternative to proprietary tools like Claude Code and Codex. The Python API and model-agnostic design make it straightforward to integrate into custom build pipelines or test against different models for cost optimization.
+
+---
+
+## LLMs are stuck in a groupthink groove. This startup is trying to get them out.
+
+**Source:** MIT Tech Review AI  
+**URL:** https://www.technologyreview.com/2026/07/01/1140003/llms-are-stuck-in-a-groupthink-rut-this-startup-is-trying-to-get-them-out/  
+**Topics:** Evals / Benchmarks, Training / Fine-tuning, Industry
+
+Large language models exhibit a striking and underappreciated degree of predictability in their responses to open-ended prompts, and an Australian startup called Springboards has built a model designed to break that pattern. The company's LLM, called Flint, is trained to produce a wider range of responses than mainstream models when given creative or exploratory prompts. The problem is easy to demonstrate. Ask Claude, ChatGPT, or Gemini for a random number between one and ten and the answer is almost always seven. Ask for a type of car and the response clusters around Toyota or Honda. Request a tagline for a running shoe campaign and both Claude and ChatGPT independently produce "Run your way." These are not cherry-picked failures but symptoms of what researchers have termed convergent homogeneity across the LLM landscape. A November research paper titled "Artificial Hivemind: The Open-Ended Homogeneity of Language Models (and Beyond)" formalized the observation. The team prompted 25 different LLMs 50 times each to write a metaphor about time and found that the vast majority of the 1,250 responses were variations on "Time is a river" or "Time is a weaver." The paper won the best paper award at NeurIPS and attributed the convergence to similar training data, methods, and optimization targets across model families. Springboards CEO Pip Bingemann positions Flint as an alternative for use cases where novelty matters, such as brainstorming, creative writing, and marketing copy. In demonstrations, Flint returned 3.7916 instead of seven for the random number prompt and "Built to last, run to win" for the shoe tagline. Bingemann acknowledges the limitation is tolerable for coding and research but argues it undermines any application where diverse outputs are the goal.
+
+**Why it matters:** LLM output homogeneity is a measurable problem backed by NeurIPS-awarded research, not just anecdotal frustration. For developers building applications where diversity of suggestions matters, such as brainstorming tools or recommendation engines, this convergence is a design constraint worth testing for and mitigating through sampling strategies or model selection.
+
+---
