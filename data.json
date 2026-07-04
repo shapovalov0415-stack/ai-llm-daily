@@ -92,6 +92,51 @@
         "Policy / Regulation",
         "Industry"
       ]
+    },
+    {
+      "id": "2026-07-05-001",
+      "date": "2026-07-05",
+      "title": "Anthropic developer shares prompting tips for Fable 5 that focus on finding your own blind spots first",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-developer-shares-prompting-tips-for-fable-5-that-focus-on-finding-your-own-blind-spots-first/",
+      "thumbnail": "https://the-decoder.com/wp-content/uploads/2026/07/fable_5_unknown_unknown.png",
+      "summary": "Anthropic developer Thariq Shihipar argues that with Fable 5, the bottleneck in AI-assisted coding has shifted from model capability to the user's own blind spots. He frames the challenge using a known-unknowns matrix: Known Knowns are already in the prompt, Known Unknowns are questions you are aware you have not answered, Unknown Knowns are assumptions so obvious you never write them down, and Unknown Unknowns are things you have not considered at all. Shihipar considers the last category the critical one for getting good results from Fable 5. He warns that being too specific risks the model rigidly following instructions even when a change of course would be better, while being too vague produces decisions based on industry defaults that may not fit the task. The solution is a set of pre-implementation techniques designed to surface what you do not know before handing work off to the model. The centerpiece technique is what Shihipar calls a blindspot pass, where you ask Claude to identify your unknown unknowns. He provides an example prompt for working in an unfamiliar part of a codebase, asking Claude to find relevant unknown unknowns and help the user prompt more effectively. For areas heavy with unconscious assumptions, such as visual design, he recommends having Claude generate several radically different directions as HTML artifacts before committing to implementation. Other techniques include structured interviews, where Claude asks targeted questions about ambiguities prioritizing those whose answers would change the architecture, and maintaining a temporary implementation-notes file during coding sessions to track decisions and discovered unknowns in real time. Shihipar starts nearly every session with an exploration or brainstorming phase to define project scope before writing any code.",
+      "whyItMatters": "For Claude Code power users, this reframes the prompting challenge entirely: the model is no longer the weak link, your unexamined assumptions are. The blindspot pass and structured interview techniques are immediately applicable to any coding session and cost nothing to try, particularly when working in unfamiliar parts of a codebase.",
+      "topics": [
+        "Claude / Anthropic",
+        "AI Coding",
+        "Hands-on"
+      ]
+    },
+    {
+      "id": "2026-07-05-002",
+      "date": "2026-07-05",
+      "title": "Featuring Every Eval Ever Results on Hugging Face Model Pages",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/eee-community-evals",
+      "thumbnail": "https://huggingface.co/blog/assets/eee_commevals/eee_commevals_banner.png",
+      "summary": "The Every Eval Ever project and Hugging Face Community Evals have merged their evaluation reporting systems into an intercompatible pipeline. EEE launched in February 2026 as a product of the EvalEval Coalition, the first cross-institutional effort to standardize how AI evaluation results get reported. Hugging Face Community Evals launched the same month to decentralize how benchmark scores appear on the Hub. The integration lets contributors submit results to both systems simultaneously, with evaluation data surfacing directly on Hugging Face model pages alongside full provenance records. The core problem the project addresses is that evaluation results are scattered across papers, leaderboards, blog posts, and harness logs, each in its own format. The same model on the same benchmark can return wildly different scores depending on who ran it and how. The blog post cites LLaMA 65B as an example, which has been reported at both 63.7 and 48.8 on MMLU, with discrepancies arising from commonly unreported evaluation settings. EEE tackles this with a single JSON schema for evaluation results that records the model, benchmark, score, and the settings under which the evaluation was run. The datastore on Hugging Face has grown to approximately 229,000 evaluation results across more than 22,000 models and 2,200 benchmarks, pulled from 31 different reporting formats. The project estimates that reproducing those runs from scratch would cost hundreds of thousands of dollars. A new converter tool takes EEE records and writes the YAML files Hugging Face expects, eliminating the need to maintain results in two formats. Contributors can now submit to both systems in a single workflow, and anyone browsing the Hub sees results that trace back to a full standardized record.",
+      "whyItMatters": "Standardized eval reporting directly addresses the trust problem anyone comparing models faces: identical benchmarks producing different scores depending on unreported settings. Developers choosing between open-weight models for their stack now have a single place to compare apples-to-apples results with full methodology transparency.",
+      "topics": [
+        "Evals / Benchmarks",
+        "Open Models",
+        "Hands-on"
+      ]
+    },
+    {
+      "id": "2026-07-05-003",
+      "date": "2026-07-05",
+      "title": "Claude Science is Anthropic's newest flagship product",
+      "source": "MIT Tech Review",
+      "url": "https://www.technologyreview.com/2026/06/30/1139987/claude-science-is-anthropics-newest-flagship-product/",
+      "thumbnail": "https://wp.technologyreview.com/wp-content/uploads/2026/06/claude-science3a.jpg?resize=1200,600",
+      "summary": "Anthropic announced Claude Science, a standalone product designed to support scientific research with the same agentic autonomy that Claude Code brings to software engineering. Available to all paid Claude subscribers, the product can carry out meaningful research tasks when given high-level instructions and comes equipped with tools tailored for computational biology and drug development. The launch elevates Claude Science to the same product tier as Claude Code and Claude Cowork, signaling the company's strategic commitment to scientific applications. Eric Kauderer-Abrams, Anthropic's head of life sciences, described the product as central to the company's mission of developing AI for long-term well-being, with life sciences representing what the company considers its greatest opportunity. Anthropic also announced it will use Claude Science internally to pursue drug discovery for rare and neglected diseases, framing this as both mission-aligned and strategically valuable, expecting firsthand research experience to improve its models and tools for the broader industry. The move positions Anthropic in territory long dominated by Google DeepMind, whose AlphaFold work earned a Nobel Prize and whose co-developer John Jumper recently left for Anthropic. Harvard physicist Matthew Schwartz estimated, based on his work with Claude Code and other Anthropic tools, that the Opus 4.5 model approaches the capability of a research scientist in certain computational tasks. Claude Science differs from the earlier Claude for Life Sciences plug-ins released in October, which added scientific software and database integrations. The new product is a full-featured workbench rather than a set of extensions, reflecting a shift from augmenting existing workflows to providing a complete agentic research environment that mirrors the Claude Code model of autonomous task execution.",
+      "whyItMatters": "Anthropic treating science as a first-class product line alongside Code and Cowork reveals where the company sees its next major capability frontier. For developers in the Claude ecosystem, it signals continued heavy investment in agentic tool-use patterns that will likely feed improvements back into Claude Code and the broader API.",
+      "topics": [
+        "Claude / Anthropic",
+        "Agents",
+        "Industry"
+      ]
     }
   ]
 }
